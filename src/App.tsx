@@ -23,6 +23,9 @@ import {
   Briefcase,
   FileText,
   TrendingUp,
+  Phone,
+  Copy,
+  Check,
 } from 'lucide-react';
 
 export default function App() {
@@ -685,22 +688,54 @@ function TestimonialsSection({ visibleElements }: { visibleElements: Set<string>
 function ContactSection({ visibleElements }: { visibleElements: Set<string> }) {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [copiedItem, setCopiedItem] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => setToastMessage(''), 3000);
+  };
+
+  const copyToClipboard = async (text: string, item: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedItem(item);
+      setTimeout(() => setCopiedItem(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setFormData({ name: '', email: '', message: '' });
-    setTimeout(() => setIsSubmitted(false), 3000);
+
+    const message = `Hi Digital Techie,\n\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}\n\nI found your website and would like to know more about your services.`;
+
+    const whatsappUrl = `https://wa.me/919739708657?text=${encodeURIComponent(message)}`;
+
+    showToast('Opening WhatsApp...');
+
+    setTimeout(() => {
+      window.open(whatsappUrl, '_blank');
+      setIsSubmitting(false);
+      setFormData({ name: '', email: '', message: '' });
+    }, 500);
   };
 
   const isVisible = visibleElements.has('contact');
 
   return (
-    <section id="contact" className="py-20 lg:py-32 bg-gradient-to-b from-transparent via-beige-50/30 to-transparent">
+    <section id="contact" className="py-20 lg:py-32 bg-gradient-to-b from-transparent via-beige-50/30 to-transparent relative">
+      {toastMessage && (
+        <div className="fixed top-24 right-4 z-50 animate-fade-in">
+          <div className="bg-brown-800 text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3">
+            <MessageCircle className="w-5 h-5" />
+            <span>{toastMessage}</span>
+          </div>
+        </div>
+      )}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div
           id="contact"
@@ -721,49 +756,89 @@ function ContactSection({ visibleElements }: { visibleElements: Set<string> }) {
               bring them to life.
             </p>
 
-            <div className="space-y-6">
-              <a
-                href="https://instagram.com/digitaltechie"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 group"
-              >
-                <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-orange-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Instagram className="w-6 h-6 text-white" />
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 group">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Phone className="w-6 h-6 text-white" />
                 </div>
-                <div>
-                  <div className="text-sm text-brown-500">Instagram</div>
-                  <div className="font-medium text-brown-800">@digitaltechie</div>
+                <div className="flex-1">
+                  <div className="text-sm text-brown-500">WhatsApp</div>
+                  <div className="font-medium text-brown-800">+91 9739708657</div>
                 </div>
-              </a>
+                <button
+                  onClick={() => copyToClipboard('+919739708657', 'phone')}
+                  className="p-2 rounded-lg hover:bg-beige-100 transition-colors"
+                  title="Copy to clipboard"
+                >
+                  {copiedItem === 'phone' ? (
+                    <Check className="w-5 h-5 text-green-600" />
+                  ) : (
+                    <Copy className="w-5 h-5 text-brown-400" />
+                  )}
+                </button>
+              </div>
 
               <a
-                href="mailto:hello@digitaltechie.com"
+                href="mailto:akdigitaltechie@gmail.com"
                 className="flex items-center gap-4 group"
               >
                 <div className="w-12 h-12 bg-gradient-to-br from-beige-300 to-gold-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Mail className="w-6 h-6 text-white" />
                 </div>
-                <div>
+                <div className="flex-1">
                   <div className="text-sm text-brown-500">Email</div>
-                  <div className="font-medium text-brown-800">hello@digitaltechie.com</div>
+                  <div className="font-medium text-brown-800">akdigitaltechie@gmail.com</div>
+                </div>
+                <div
+                  onClick={(e) => {
+                    e.preventDefault();
+                    copyToClipboard('akdigitaltechie@gmail.com', 'email');
+                  }}
+                  className="p-2 rounded-lg hover:bg-beige-100 transition-colors"
+                  title="Copy to clipboard"
+                >
+                  {copiedItem === 'email' ? (
+                    <Check className="w-5 h-5 text-green-600" />
+                  ) : (
+                    <Copy className="w-5 h-5 text-brown-400" />
+                  )}
                 </div>
               </a>
+            </div>
 
-              <a
-                href="https://wa.me/1234567890"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-4 group"
-              >
-                <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-gold-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <MessageCircle className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <div className="text-sm text-brown-500">WhatsApp</div>
-                  <div className="font-medium text-brown-800">Send a Message</div>
-                </div>
-              </a>
+            <div className="mt-8 pt-8 border-t border-brown-200">
+              <div className="text-sm text-brown-500 mb-4">Connect with me</div>
+              <div className="flex gap-4">
+                <a
+                  href="https://instagram.com/digital._.techie"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Instagram className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-brown-500">Instagram</div>
+                    <div className="text-sm font-medium text-brown-800">@digital._.techie</div>
+                  </div>
+                </a>
+
+                <a
+                  href="https://facebook.com/digital._.techie"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm hover:shadow-md transition-all"
+                >
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Facebook className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-brown-500">Facebook</div>
+                    <div className="text-sm font-medium text-brown-800">Digital Techie</div>
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
 
@@ -823,7 +898,7 @@ function ContactSection({ visibleElements }: { visibleElements: Set<string> }) {
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Sending...
+                      Opening WhatsApp...
                     </>
                   ) : (
                     <>
@@ -834,7 +909,7 @@ function ContactSection({ visibleElements }: { visibleElements: Set<string> }) {
                 </button>
 
                 <a
-                  href="https://wa.me/1234567890"
+                  href="https://wa.me/919739708657?text=Hi%20Digital%20Techie%2C%20I%20found%20your%20website%20and%20would%20like%20to%20know%20more%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-6 py-3 bg-green-500 text-white rounded-xl font-medium hover:bg-green-600 transition-all"
@@ -843,12 +918,6 @@ function ContactSection({ visibleElements }: { visibleElements: Set<string> }) {
                   WhatsApp
                 </a>
               </div>
-
-              {isSubmitted && (
-                <div className="p-4 bg-green-50 border border-green-200 rounded-xl text-green-700 text-center animate-fade-in">
-                  Message sent successfully! I'll get back to you soon.
-                </div>
-              )}
             </form>
           </div>
         </div>
