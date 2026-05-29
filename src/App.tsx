@@ -495,38 +495,56 @@ function WhyChooseSection({ visibleElements }: { visibleElements: Set<string> })
 }
 
 function PortfolioSection({ visibleElements }: { visibleElements: Set<string> }) {
+  const [imageLoading, setImageLoading] = useState<{ [key: number]: boolean }>({});
+  const [imageErrors, setImageErrors] = useState<{ [key: number]: boolean }>({});
+
   const projects = [
     {
+      id: 1,
       title: 'Modern Coffee Brand Logo',
       category: 'Branding',
       image: 'https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
+      id: 2,
       title: 'Restaurant Landing Page',
       category: 'Web Design',
-      image: 'https://images.pexels.com/photos/1517248135467?auto=compress&cs=tinysrgb&w=600',
+      image: 'https://images.pexels.com/photos/674683/pexels-photo-674683.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
+      id: 3,
       title: 'Fitness Flyer Design',
       category: 'Print Design',
       image: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
+      id: 4,
       title: 'Personal Portfolio Website',
       category: 'Development',
       image: 'https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
+      id: 5,
       title: 'Social Media Campaign',
       category: 'Digital Marketing',
       image: 'https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
+      id: 6,
       title: 'Brand Identity Project',
       category: 'Branding',
       image: 'https://images.pexels.com/photos/6354980/pexels-photo-6354980.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
   ];
+
+  const handleImageLoad = (id: number) => {
+    setImageLoading((prev) => ({ ...prev, [id]: false }));
+  };
+
+  const handleImageError = (id: number) => {
+    setImageErrors((prev) => ({ ...prev, [id]: true }));
+    setImageLoading((prev) => ({ ...prev, [id]: false }));
+  };
 
   const isVisible = visibleElements.has('portfolio');
 
@@ -555,27 +573,46 @@ function PortfolioSection({ visibleElements }: { visibleElements: Set<string> })
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <div
-              key={index}
+              key={project.id}
               className={`group relative overflow-hidden rounded-2xl bg-white card-shadow ${
                 isVisible ? 'animate-fade-in-up' : 'opacity-0'
               }`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform">
-                  <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs mb-2">
-                    {project.category}
-                  </span>
-                  <h3 className="text-lg font-semibold text-white">
-                    {project.title}
-                  </h3>
-                </div>
+              <div className="relative h-64 overflow-hidden bg-gradient-to-br from-beige-100 to-beige-200">
+                {imageErrors[project.id] ? (
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gold-100 to-orange-100">
+                    <div className="w-16 h-16 bg-white/50 rounded-xl flex items-center justify-center mb-3">
+                      <Layers className="w-8 h-8 text-gold-600" />
+                    </div>
+                    <p className="text-sm font-medium text-brown-600">Project Preview</p>
+                    <p className="text-xs text-brown-500">Coming Soon</p>
+                  </div>
+                ) : (
+                  <>
+                    {imageLoading[project.id] !== false && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-beige-100 to-beige-200 animate-pulse">
+                        <div className="w-12 h-12 border-3 border-gold-300 border-t-gold-600 rounded-full animate-spin" />
+                      </div>
+                    )}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      onLoad={() => handleImageLoad(project.id)}
+                      onError={() => handleImageError(project.id)}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 transform translate-y-full group-hover:translate-y-0 transition-transform">
+                      <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs mb-2">
+                        {project.category}
+                      </span>
+                      <h3 className="text-lg font-semibold text-white">
+                        {project.title}
+                      </h3>
+                    </div>
+                  </>
+                )}
               </div>
               <div className="p-5 lg:hidden">
                 <span className="inline-block px-3 py-1 bg-gold-100 text-gold-700 rounded-full text-xs mb-2">
