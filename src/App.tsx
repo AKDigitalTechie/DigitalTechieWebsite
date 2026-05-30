@@ -12,7 +12,6 @@ import {
   MessageCircle,
   Instagram,
   Facebook,
-  Linkedin,
   Send,
   Sparkles,
   Target,
@@ -477,7 +476,7 @@ function WhyChooseSection({ visibleElements }: { visibleElements: Set<string> })
               }`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="absolute top-0 left-8 w-1 h-full bg-gradient-to-b from-gold-400 to-orange-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute top-0 left-4 w-1 h-full bg-gradient-to-b from-gold-400 to-orange-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div className="w-16 h-16 bg-gradient-to-br from-gold-400 to-orange-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform shadow-lg">
                 <feature.icon className="w-8 h-8 text-white" />
@@ -509,7 +508,7 @@ function PortfolioSection({ visibleElements }: { visibleElements: Set<string> })
       id: 2,
       title: 'Restaurant Landing Page',
       category: 'Web Design',
-      image: 'https://images.pexels.com/photos/674683/pexels-photo-674683.jpeg?auto=compress&cs=tinysrgb&w=600',
+      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800',
     },
     {
       id: 3,
@@ -531,9 +530,9 @@ function PortfolioSection({ visibleElements }: { visibleElements: Set<string> })
     },
     {
       id: 6,
-      title: 'Brand Identity Project',
+      title: 'Startup Branding',
       category: 'Branding',
-      image: 'https://images.pexels.com/photos/6354980/pexels-photo-6354980.jpeg?auto=compress&cs=tinysrgb&w=600',
+      image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
   ];
 
@@ -633,22 +632,40 @@ function PortfolioSection({ visibleElements }: { visibleElements: Set<string> })
 function TestimonialsSection({ visibleElements }: { visibleElements: Set<string> }) {
   const testimonials = [
     {
-      name: 'Sarah Mitchell',
+      name: 'Roxanne Roxy',
       role: 'Startup Founder',
       image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=200',
       text: 'Digital Techie transformed our brand completely. The attention to detail and creative approach exceeded our expectations. Highly recommended!',
     },
     {
-      name: 'James Anderson',
+      name: 'Michael Thompson',
       role: 'Restaurant Owner',
       image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200',
       text: 'The website Digital Techie created for us has significantly increased our online orders. Professional work with quick turnaround time.',
     },
     {
-      name: 'Emily Chen',
+      name: 'Priya Sharma',
       role: 'Marketing Director',
       image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200',
       text: 'Working with Digital Techie was a game-changer. The social media designs and brand identity work helped us stand out in a crowded market.',
+    },
+    {
+      name: 'Anil Kumar',
+      role: 'Owner, Sharma Electronics (Bangalore)',
+      image: 'https://i.pravatar.cc/200?img=65',
+      text: 'Digital Techie created a professional website for my business and helped improve our online presence. The work was delivered on time and exceeded expectations.',
+    },
+    {
+      name: 'Raj Singh',
+      role: 'Founder, Kerala Handmade Crafts',
+      image: 'https://i.pravatar.cc/200?img=66',
+      text: 'The branding and social media creatives were excellent. We received more engagement and inquiries after launching the new designs.',
+    },
+    {
+      name: 'Arjun',
+      role: 'Managing Director, Hyderabad Fitness Hub',
+      image: 'https://i.pravatar.cc/200?img=67',
+      text: 'Professional communication, modern design, and quick turnaround. Highly recommended for websites and branding services.',
     },
   ];
 
@@ -679,12 +696,12 @@ function TestimonialsSection({ visibleElements }: { visibleElements: Set<string>
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className={`bg-white rounded-2xl p-8 card-shadow ${
+              className={`bg-white rounded-2xl p-8 card-shadow flex flex-col h-full ${
                 isVisible ? 'animate-fade-in-up' : 'opacity-0'
               }`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="flex items-center gap-1 mb-6">
+              <div className="flex items-center gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
                   <svg
                     key={i}
@@ -697,11 +714,11 @@ function TestimonialsSection({ visibleElements }: { visibleElements: Set<string>
                 ))}
               </div>
 
-              <p className="text-brown-600 mb-6 leading-relaxed">
+              <p className="text-brown-600 leading-relaxed flex-1">
                 "{testimonial.text}"
               </p>
 
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-4 mt-6">
                 <img
                   src={testimonial.image}
                   alt={testimonial.name}
@@ -1023,14 +1040,6 @@ function Footer({ scrollTo }: { scrollTo: (id: string) => void }) {
                 className="w-10 h-10 bg-brown-700 rounded-lg flex items-center justify-center hover:bg-gold-500 transition-colors"
               >
                 <Facebook className="w-5 h-5" />
-              </a>
-              <a
-                href="https://linkedin.com/company/digitaltechie"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-brown-700 rounded-lg flex items-center justify-center hover:bg-gold-500 transition-colors"
-              >
-                <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </div>
