@@ -766,7 +766,7 @@ function ContactSection({ visibleElements }: { visibleElements: Set<string> }) {
 
     const message = `Hi Digital Techie,\n\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}\n\nI found your website and would like to know more about your services.`;
 
-    const whatsappUrl = `https://wa.me/919739708657?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/919380564028?text=${encodeURIComponent(message)}`;
 
     showToast('Opening WhatsApp...');
 
@@ -817,10 +817,10 @@ function ContactSection({ visibleElements }: { visibleElements: Set<string> }) {
                 </div>
                 <div className="flex-1">
                   <div className="text-sm text-brown-500">WhatsApp</div>
-                  <div className="font-medium text-brown-800">+91 9739708657</div>
+                  <div className="font-medium text-brown-800">+91 9380564028</div>
                 </div>
                 <button
-                  onClick={() => copyToClipboard('+919739708657', 'phone')}
+                  onClick={() => copyToClipboard('+919380564028', 'phone')}
                   className="p-2 rounded-lg hover:bg-beige-100 transition-colors"
                   title="Copy to clipboard"
                 >
@@ -963,7 +963,7 @@ function ContactSection({ visibleElements }: { visibleElements: Set<string> }) {
                 </button>
 
                 <a
-                  href="https://wa.me/919739708657?text=Hi%20Digital%20Techie%2C%20I%20found%20your%20website%20and%20would%20like%20to%20know%20more%20about%20your%20services."
+                  href="https://wa.me/919380564028?text=Hi%20Digital%20Techie%2C%20I%20found%20your%20website%20and%20would%20like%20to%20know%20more%20about%20your%20services."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 px-6 py-3 bg-green-500 text-white rounded-xl font-medium hover:bg-green-600 transition-all"
